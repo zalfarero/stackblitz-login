@@ -1,19 +1,23 @@
 import { Component } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import 'zone.js';
+import { LoginComponent} from "./app/login/login.component";
+import { Router } from "@angular/router";
+import { AuthService} from "./app/services/auth.service";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  template: `
-    <h1>Hello from {{ name }}!</h1>
-    <a target="_blank" href="https://angular.dev/overview">
-      Learn more about Angular
-    </a>
-  `,
+  imports: [LoginComponent],
+  template: `<app-login></app-login>`,
 })
 export class App {
-  name = 'Angular';
+  constructor(private authService: AuthService, private router: Router ) {}
+
+  logout(){
+      this.authService.logout();
+      this.router.navigateByUrl('login');
+  }
 }
 
 bootstrapApplication(App);
